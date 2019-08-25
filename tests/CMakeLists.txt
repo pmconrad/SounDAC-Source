@@ -14,6 +14,12 @@ file(GLOB PLUGIN_TESTS "plugin_tests/*.cpp")
 add_executable( plugin_test ${PLUGIN_TESTS} ${COMMON_SOURCES} )
 target_link_libraries( plugin_test muse_chain muse_app muse_account_history muse_egenesis_full muse_market_history muse_custom_tags muse_egenesis_full fc ${PLATFORM_SPECIFIC_LIBS} )
 
+file(GLOB PERF_TESTS "performance_tests/*.cpp")
+add_executable( performance_test ${PERF_TESTS} ${COMMON_SOURCES} "plugin_tests/main.cpp" )
+target_link_libraries( performance_test muse_chain muse_app muse_egenesis_full
+                                        muse_account_history muse_market_history muse_custom_tags
+                                        fc ${PLATFORM_SPECIFIC_LIBS} )
+
 if(MSVC)
   set_source_files_properties( tests/serialization_tests.cpp PROPERTIES COMPILE_FLAGS "/bigobj" )
 endif(MSVC)
