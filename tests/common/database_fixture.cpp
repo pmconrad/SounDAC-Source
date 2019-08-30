@@ -52,11 +52,16 @@ void database_fixture::initialize_clean( uint32_t num_hardforks )
 
    open_database();
 
-   // app.initialize();
-   ahplugin->plugin_set_app( &app );
-   ctplugin->plugin_set_app( &app );
-   ahplugin->plugin_initialize( options );
-   ctplugin->plugin_initialize( options );
+   const auto current_test_name = boost::unit_test::framework::current_test_case().p_name.value;
+   const auto current_test_suite_id = boost::unit_test::framework::current_test_case().p_parent_id;
+   const auto current_test_suite = boost::unit_test::framework::get<boost::unit_test::test_suite>(current_test_suite_id).p_name.value;
+   if( current_test_suite != "performance_tests" )
+   {
+      ahplugin->plugin_set_app( &app );
+      ctplugin->plugin_set_app( &app );
+      ahplugin->plugin_initialize( options );
+      ctplugin->plugin_initialize( options );
+   }
 
    validate_database();
    generate_block();
