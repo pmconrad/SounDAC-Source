@@ -1644,7 +1644,6 @@ asset database::process_content_cashout( const asset& content_reward )
    while ( itr != ridx.end() && itr->created <= cashing_time )
    {
       const account_object & consumer = get<account_object>( itr->consumer );
-      dlog("process content cashout ", ("consumer.total_listening_time", consumer.total_listening_time));
       FC_ASSERT( consumer.total_listening_time > 0 );
       asset pay_reserve = total_payout * itr->play_time;
       if( !has_hardfork( MUSE_HARDFORK_0_2 ) )
